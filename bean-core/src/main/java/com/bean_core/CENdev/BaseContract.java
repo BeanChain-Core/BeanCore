@@ -1,5 +1,7 @@
 package com.bean_core.CENdev;
 
+import org.iq80.leveldb.DB;
+
 import com.bean_core.TXs.CENCALL;
 
 /**
@@ -50,6 +52,13 @@ import com.bean_core.TXs.CENCALL;
  * and follows BeanChain's standard transaction format and signature requirements.
  */
 public interface BaseContract {
+
+    /**
+     * used internally by the contract to find its own identity in the DB 
+     * loads contract address, hash, and pubKey from storage after contract is loaded and initialized by a CEN
+     * 
+     */
+    void loadIndentity(DB db, String contractName, String devKey);
 
     /**
      * Called once at deployment time to initialize the contract state.

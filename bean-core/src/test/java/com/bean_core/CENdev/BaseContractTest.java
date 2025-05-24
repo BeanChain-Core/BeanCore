@@ -5,12 +5,22 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.iq80.leveldb.DB;
+
 public class BaseContractTest {
 
     static class DummyContract implements BaseContract {
+        String contractName; //hardcode this
+        String devKey; //this is how contracts find their info 
+
         boolean called = false;
         String methodReceived = null;
         boolean initialized = false;
+
+        @Override
+        public void loadIndentity(DB db, String contractName, String devKey){
+
+        }
 
         @Override
         public void init() {
