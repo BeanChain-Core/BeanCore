@@ -1,58 +1,72 @@
-# BeanCore
+# BeanPack-Java
 
-**BeanCore** is the official SDK for the BeanChain blockchain network. It provides core transaction models, cryptographic utilities, wallet state structures, and reusable tools shared across all (*Java*) BeanChain projects — including nodes, contract runners, and developer tools.
+**BeanPack-Java** is the official Java SDK for the **BeanChain** blockchain network. It provides core transaction models, cryptographic utilities, wallet structures, and reusable tools used across all Java-based BeanChain projects — including validator nodes, contract execution nodes, reward engines, and developer tools.
 
-This SDK is designed for modular integration with:
-- *Java Built BeanChain Applications*
-- BeanNode (validator node)
-- Contract Execution Node (CEN)
-- Reward Node (RN)
-- Indexers and future sidechain modules
+This package is maintained by the **BeanChain Core Team** under **Outlandish Tech**, a division of **Outlandish Creative LLC**.
+
+> Current Version: `0.0.1`  
+> Actively maintained. Java is the first supported language, with **Go and other SDKs in progress**. If you're interested in helping bring multi-language SDK support to BeanChain, [reach out to the team](#contact).
+
+---
+
+## Designed For
+
+BeanPack-Java is built for modular integration with:
+
+- **BeanNode** – Core validator node
+- **CEN** – Contract Execution Node
+- **RN** – Reward Node
+- Wallet & indexer utilities
+- Sidechains & modular custom nodes
 
 ---
 
 ## What's Included
 
-This package currently includes the following classes and modules:
+### Core Modules
 
-### Block
-- `Block.java`: Core block structure and Merkle logic
+#### `block`
+- `Block.java` – Block structure and Merkle root calculation
 
-### ~CENCALL (Contract Execution Call Logic)~ *WIP THESE COMPONENTS ARE NOT USABLE IN CURRENT STATE*
-- ~`CallManager.java`: General contract call processor~
+#### `crypto`
+- `SHA256TransactionSigner.java` – ECDSA signing (secp256k1)
+- `TransactionVerifier.java` – Signature and transaction validator
+- `WalletGenerator.java` – Key pair generator, public key → address conversion
 
-### Crypto
-- `SHA256TransactionSigner.java`: Signs SHA-256 hashes using ECDSA over secp256k1
-- `TransactionVerifier.java`: Verifies wallet signature and transaction authenticity
-- `WalletGenerator.java`: Key pair generation, public key derivation, and address formatting
+#### `models`
+- `StateWallet.java` – L1 wallet (nonce + balance)
+- `Layer2Wallet.java` – L2 wallet for fungible tokens
 
-### Models
-- `Layer2Wallet.java`: Stores wallet balances for Layer 2 tokens 
-- `StateWallet.java`: Stores nonce and balance information for Layer 1 wallets
+#### `txs` (Transaction Types)
+- `TX.java` – Core transaction model
+- `MintTX.java` – Layer 2 token minting
+- `TokenTX.java` – Layer 2 token transfer
+- `TokenCENTX.java` – Contract-issued L2 TX
+- `StakeTX.java` – Stake TX used in internal contracts
+- `AirdropTX.java` – RN-issued reward or drip TX
+- `CENCALL.java` – A contract call sent to and handled by a CEN (can include a FundedCallTX or StakeTX, FUNDEDCENCALL)
+- `FundedCallTX.java` – A TX that triggers a CENCALL to be built and sent with this TX inside of it for funded CENCALLs
 
-### Security
-- `SecuritySetup.java`: Initializes Bouncy Castle cryptographic provider
 
-### TXs (Transaction Types)
-- `TX.java`: Main Layer 1 transaction structure
-- `MintTX.java`: Specialized TX for minting Layer 2 tokens
-- `TokenTX.java`: Specialized TX for sending layer 2 tokens
-- `TokenCENTX.java`: Specialized TX for CEN initiated layer 2 TX
-- `StakeTX.java`: Specialized TX for internal hardcoded Stake contract logic
-- `AirdropTX.java`: Specific TX model used by the team RN for reward/drip airdrops 
+#### `utils`
+- `beantoshinomics.java` – BEAN ↔ beantoshi conversion
+- `hex.java` – Hex encode/decode utility
 
-### Utils
-- `beantoshinomics.java`: Converts between BEAN and beantoshi (smallest unit)
-- `hex.java`: Hex encoding/decoding utility
+#### `wizard`
+- `wizard.java` – Lightweight encryption used for local key configs  
+  *(This will evolve into a local wizard key manager.)*
 
-### Wizard
-- `wizard.java`: Utility  *USED AS LIGHT ENCRYPTION FOR NODE CONFIG, WILL BE UPDATED, AND WILL BE USED TO CREATE AN EASY DOWNLOAD LOCAL WIZARD KEY SAVER*
+#### `security`
+- `SecuritySetup.java` – Bouncy Castle provider initializer
+
+#### *Work-In-Progress*
+- `CallManager.java` – (CENCALL processor — WIP, not yet active)
 
 ---
 
 ## How to Use
 
-BeanCore is published via GitHub Packages and can be added to any Maven-based Java project.
+BeanPack-Java is hosted via GitHub Packages and can be added to any Maven-based project.
 
 ### Step 1: Add the GitHub Packages repository
 
@@ -60,7 +74,7 @@ BeanCore is published via GitHub Packages and can be added to any Maven-based Ja
 <repositories>
   <repository>
     <id>github</id>
-    <url>https://maven.pkg.github.com/BeanChain-Core/BeanCore</url>
+    <url>https://maven.pkg.github.com/BeanChain-Core/BeanPack-Java</url>
   </repository>
 </repositories>
 ```
@@ -70,15 +84,16 @@ BeanCore is published via GitHub Packages and can be added to any Maven-based Ja
 ```xml
 <dependency>
   <groupId>com.beanchain</groupId>
-  <artifactId>bean-core</artifactId>
-  <version>0.2.3</version>
+  <artifactId>bean-pack</artifactId>
+  <version>0.0.1</version>
 </dependency>
 ```
-CHECK THE LATEST VERSION RELEASE
 
-### Step 3: Add your GitHub token to Maven settings
+> Check [Releases](https://github.com/BeanChain-Core/BeanPack-Java/releases) for the latest version.
 
-In your `~/.m2/settings.xml` file:
+### Step 3: Add GitHub credentials
+
+In your `~/.m2/settings.xml`:
 
 ```xml
 <servers>
@@ -90,21 +105,36 @@ In your `~/.m2/settings.xml` file:
 </servers>
 ```
 
-> Your token must have `read:packages` and `repo` scopes.
+> Your token must include `read:packages` and `repo` scopes.
+
+---
+
+## SDK Roadmap
+
+Java is the first official SDK — but more are on the way.
+
+We are currently working on:
+- **BeanPack-Go** – full Go SDK for lightweight tools and headless embedded nodes
+- **Planned SDKs** – Python and JavaScript versions for dApps, explorers, and web tooling
+
+> Interested in helping build SDKs in your preferred language? Let’s collaborate!
 
 ---
 
 ## License
 
-This project is open-source under the MIT License.  
-See the [`LICENSE`](LICENSE) file for details.
+MIT License — see [`LICENSE`](LICENSE)
 
 ---
 
 ## Contact
 
-For support, integration help, or contribution inquiries, contact the BeanChain core team:
+**Email:** team@limabean.xyz  
+**Org:** [github.com/BeanChain-Core](https://github.com/BeanChain-Core)
 
-**Email:** team@limabean.xyz
+Crafted by the **BeanChain Core Team**  
+Under **Outlandish Tech**, powered by **Outlandish Creative LLC**
+
+Beans Bean Beany Bean
 
 

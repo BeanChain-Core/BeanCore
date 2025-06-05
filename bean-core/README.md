@@ -135,4 +135,6 @@ MIT License — see [`LICENSE`](LICENSE)
 Crafted by the **BeanChain Core Team**  
 Under **Outlandish Tech**, powered by **Outlandish Creative LLC**
 
+Beans Bean Beany Bean
+
 
