@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.beanchain</groupId>
-    <artifactId>bean-core</artifactId>
-    <version>0.2.15</version>
+    <artifactId>bean-pack-java</artifactId>
+    <version>0.0.0</version>
 
     <packaging>jar</packaging>
 
-    <name>BeanChain Core</name>
+    <name>BeanChain Pack</name>
     <description>Building Blocks for Bean Devs (Crypto, Utils, Models, Managers, CEN modules)</description>
-    <url>https://github.com/BeanChain-Core/BeanCore</url>
+    <url>https://github.com/BeanChain-Core/BeanPack-Java</url>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -36,16 +36,16 @@
     </developers>
 
     <scm>
-        <url>https://github.com/BeanChain-Core/BeanCore</url>
-        <connection>scm:git:git://github.com/BeanChain-Core/BeanCore.git</connection>
-        <developerConnection>scm:git:ssh://github.com:BeanChain-Core/BeanCore.git</developerConnection>
+        <url>https://github.com/BeanChain-Core/BeanPack-Java</url>
+        <connection>scm:git:git://github.com/BeanChain-Core/BeanPack-Java.git</connection>
+        <developerConnection>scm:git:ssh://github.com:BeanChain-Core/BeanPack-Java.git</developerConnection>
     </scm>
 
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/BeanChain-Core/BeanCore</url>
+            <url>https://maven.pkg.github.com/BeanChain-Core/BeanPack-Java</url>
         </repository>
     </distributionManagement>
 
